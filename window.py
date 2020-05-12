@@ -45,7 +45,7 @@ class FindStreamsThread(QThread):
 
         youtube.register_on_complete_callback(self.on_complete)
         youtube.register_on_progress_callback(self.on_progress)
-        self.foundStreams.emit(youtube.streams.all(), image, youtube.title)
+        self.foundStreams.emit(list(youtube.streams), image, youtube.title)
 
 
 class DownloadStreamsThread(QThread):
@@ -64,7 +64,7 @@ class DownloadStreamsThread(QThread):
     def run(self):
 
         for stream, directory, prefix in self.stream_infos:
-            stream.download(directory, prefix)
+            stream.download(output_path=directory, filename_prefix=prefix)
         self.downloadedAllStreams.emit()
 
 
@@ -358,11 +358,9 @@ class MainWindow(QMainWindow):
         self.tree_view.setEnabled(False)
 
     def on_download_complete(self, stream, file_handle):
-        from pathlib import Path
-        path = Path(file_handle.name)
-        self.log_handler.emit(f"Finished downloading \"{path}\"")
+        self.log_handler.emit(f"Finished downloading \"{file_handle}\"")
 
-    def on_download_progress(self, stream, chunk, file_handle, bytes_remaining):
+    def on_download_progress(self, stream, chunk, bytes_remaining):
         maximum = self.progress_bar.maximum()
         if bytes_remaining == 0 or stream.filesize == 0:
             self.progress_bar.setValue(maximum)
