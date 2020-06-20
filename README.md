@@ -3,7 +3,9 @@
 <h1>Overview</h1>
 The Standalone Youtube Downloader is a Python PyQt application for finding and downloading audio and video streams from YouTube.
 
-![](https://github.com/PaulBenMarsh/StandaloneYoutubeDownloader/blob/master/screenshots/screenshot.png?raw=true)
+<p align="center">
+<img src="https://github.com/PaulBenMarsh/StandaloneYoutubeDownloader/blob/master/screenshots/screenshot.png?raw=true">
+</p>
 
 <h1>Dependencies</h1>
 <ul>
